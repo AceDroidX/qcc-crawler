@@ -1,0 +1,105 @@
+{
+    "data": [
+        {
+            "KeyNo": "30231f9883c7e620f6e6c283fc4b8335",
+            "CompanyName": "中国移动通信有限公司销售分公司",
+            "ImageUrl": "https://image.qcc.com/logo/30231f9883c7e620f6e6c283fc4b8335.jpg?x-oss-process=style/logo_200",
+            "Proportion": null,
+            "Quota": null,
+            "ReportYear": "2023",
+            "Month": "03",
+            "Source": "招投标",
+            "SourceId": "e56f1d3254d72aa740b30f4ee883c14d",
+            "SourceCode": 6,
+            "Relationship": "未知",
+            "GroupIdAll": "77b923f43105bc4b845f8a8dbe90642d",
+            "GroupCountAll": 3
+        },
+        {
+            "KeyNo": "g122d2648e284f629c24bbfb685f6ceb",
+            "CompanyName": "上海市卫生健康委员会",
+            "ImageUrl": "https://image.qcc.com/auto/g122d2648e284f629c24bbfb685f6ceb.jpg?x-oss-process=style/logo_200",
+            "Proportion": null,
+            "Quota": null,
+            "ReportYear": "2023",
+            "Month": "01",
+            "Source": "招投标",
+            "SourceId": "7e1ec2086487eb4cdedf922ea9136a49",
+            "SourceCode": 6,
+            "Relationship": "未知",
+            "GroupIdAll": "77a09a859c3c53fe05517b6bb7cb6a77",
+            "GroupCountAll": 1
+        },
+        {
+            "KeyNo": "g0ecb9372cd0ed21b673105385164884",
+            "CompanyName": "深圳市福田区文化广电旅游体育局",
+            "ImageUrl": "https://image.qcc.com/auto/g0ecb9372cd0ed21b673105385164884.jpg?x-oss-process=style/logo_200",
+            "Proportion": null,
+            "Quota": null,
+            "ReportYear": "2022",
+            "Month": "12",
+            "Source": "招投标",
+            "SourceId": "529802fcd16ca67e47300018b1a389fc",
+            "SourceCode": 6,
+            "Relationship": "未知",
+            "GroupIdAll": "59f25d76fbe6b7175d771e7cdd557245",
+            "GroupCountAll": 2
+        },
+        {
+            "KeyNo": "ede9b5816b02b573f62275eb93bc7eba",
+            "CompanyName": "联通在线信息科技有 限公司",
+            "ImageUrl": "https://image.qcc.com/logo/ede9b5816b02b573f62275eb93bc7eba.jpg?x-oss-process=style/logo_200",
+            "Proportion": null,
+            "Quota": null,
+            "ReportYear": "2020",
+            "Month": "04",
+            "Source": "招投标",
+            "SourceId": "ba752bfcf3fddecae6dcceee2cfa54d4",
+            "SourceCode": 6,
+            "Relationship": "未知",
+            "GroupIdAll": "08bc449669891a46a6b9aeefaee24d0d",
+            "GroupCountAll": 1
+        }
+    ],
+    "pageInfo": {
+        "total": 4,
+        "pageSize": 10,
+        "pageIndex": 1
+    },
+    "groupItems": {
+        "sourceCode": [
+            {
+                "value": "6",
+                "desc": "招投标",
+                "count": 6
+            }
+        ],
+        "reportYear": [
+            {
+                "value": "all",
+                "desc": "全部",
+                "count": 4
+            },
+            {
+                "value": "2023",
+                "desc": "2023",
+                "count": 2
+            },
+            {
+                "value": "2022",
+                "desc": "2022",
+                "count": 1
+            },
+            {
+                "value": "2020",
+                "desc": "2020",
+                "count": 2
+            },
+            {
+                "value": "2019",
+                "desc": "2019",
+                "count": 1
+            }
+        ]
+    }
+}

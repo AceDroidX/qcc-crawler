@@ -1,0 +1,111 @@
+{
+    "list": [
+        {
+            "KeyNo": "ec48ff26b7f0742a1e8bf9ae30b5b150",
+            "QccCode": "",
+            "Name": "<em>上</em><em>海</em><em>国</em><em>际</em><em>港</em><em>务</em>（<em>集</em><em>团</em>）<em>股</em><em>份</em><em>有</em><em>限</em><em>公</em><em>司</em>",
+            "OperName": "顾金山",
+            "ImageUrl": "https://image.qcc.com/logo/ec48ff26b7f0742a1e8bf9ae30b5b150.jpg?x-oss-process=style/logo_200",
+            "IsAuth": false,
+            "AuthLevel": -1,
+            "isHide": false,
+            "OperInfo": "{\"k\":\"p2252da41b62b22496893ff7ddd1a670\",\"o\":2,\"t\":1,\"h\":false}",
+            "name": "上海国际港务（集团）股份有限公司",
+            "Reason": "网站名称匹配"
+        },
+        {
+            "KeyNo": "cbb3e7e4b4e3745f02b3469e304d8420",
+            "QccCode": "",
+            "Name": "<em>上海国际港务</em>（<em>集团</em>）<em>股份有限公司</em>煤炭分<em>公司</em>",
+            "OperName": "吴斌",
+            "ImageUrl": "https://image.qcc.com/logo/cbb3e7e4b4e3745f02b3469e304d8420.jpg?x-oss-process=style/logo_200",
+            "IsAuth": false,
+            "AuthLevel": -1,
+            "isHide": false,
+            "OperInfo": "{\"k\":\"pr0cc526fe9a244ebc8a68a81de631eb\",\"o\":2,\"t\":3,\"h\":false}",
+            "name": "上海国际港务（集团）股份有限公司煤炭分公司",
+            "Reason": "名称匹配"
+        },
+        {
+            "KeyNo": "a5d8218bdada1cc28ef01ef041da51e6",
+            "QccCode": "",
+            "Name": "<em>上海国际港务</em>（<em>集团</em>）<em>股份有限公司</em>张华浜分<em>公司</em>",
+            "OperName": "顾云耀",
+            "ImageUrl": "https://image.qcc.com/logo/a5d8218bdada1cc28ef01ef041da51e6.jpg?x-oss-process=style/logo_200",
+            "IsAuth": false,
+            "AuthLevel": -1,
+            "isHide": false,
+            "OperInfo": "{\"k\":\"peddca5dfdad38d62c4e44955d130fa1\",\"o\":2,\"t\":3,\"h\":false}",
+            "name": "上海国际港务（集团）股份有限公司张华浜分公司",
+            "Reason": "名称匹配"
+        },
+        {
+            "KeyNo": "b026b1676a6e655259f48dc3b9a6fe47",
+            "QccCode": "",
+            "Name": "<em>上海国际港务</em>（<em>集团</em>）<em>股份有限公司</em>龙吴分<em>公司</em>",
+            "OperName": "任胜华",
+            "ImageUrl": "https://image.qcc.com/logo/b026b1676a6e655259f48dc3b9a6fe47.jpg?x-oss-process=style/logo_200",
+            "IsAuth": false,
+            "AuthLevel": -1,
+            "isHide": false,
+            "OperInfo": "{\"k\":\"pr57c21c1a8535b16a431601be93581c\",\"o\":2,\"t\":3,\"h\":false}",
+            "name": "上海国际港务（集团）股份有限公司龙吴分公司",
+            "Reason": "名称匹配"
+        },
+        {
+            "KeyNo": "4f5edbbb8bbf99e5865a1e8a32219815",
+            "QccCode": "",
+            "Name": "<em>上海国际港务</em>（<em>集团</em>）<em>股份有限公司</em>罗泾分<em>公司</em>",
+            "OperName": "陈雪兵",
+            "ImageUrl": "https://image.qcc.com/logo/4f5edbbb8bbf99e5865a1e8a32219815.jpg?x-oss-process=style/logo_200",
+            "IsAuth": false,
+            "AuthLevel": -1,
+            "isHide": false,
+            "OperInfo": "{\"k\":\"p68725759f1b4300b8682943db47a620\",\"o\":2,\"t\":3,\"h\":false}",
+            "name": "上海国际港务（集团）股份有限公司罗泾分公司",
+            "Reason": "名称匹配"
+        }
+    ],
+    "otherList": [
+        {
+            "ImageUrl": "https://co-image.qcc.com/searchDirect/Tender2x.png",
+            "KeyNo": "efcc4ff0e54a8df6b7f2f0f3033f7662",
+            "Name": "“<em>上海国际港…</em>” 招投标",
+            "Type": "招投标",
+            "name": "“上海国际港务(集团)股份有限公司” 招投标",
+            "searchKey": "上海国际港务(集团)股份有限公司",
+            "count": 830,
+            "tagText": "99条+"
+        },
+        {
+            "ImageUrl": "https://co-image.qcc.com/searchDirect/Punishment2x.png",
+            "KeyNo": "c716e2881d56a0ff3bdde5eca1e96902",
+            "Name": "“<em>上海国际港…</em>” 信用信息",
+            "Type": "信用",
+            "name": "“上海国际港务(集团)股份有限公司” 信用信息",
+            "searchKey": "上海国际港务(集团)股份有限公司",
+            "count": 78,
+            "tagText": "78条"
+        },
+        {
+            "ImageUrl": "https://co-image.qcc.com/searchDirect/Punishment2x.png",
+            "KeyNo": "4a9db0527af13b1563448488ca4891fd",
+            "Name": "“<em>上海国际港…</em>” 案件",
+            "Type": "案件",
+            "name": "“上海国际港务(集团)股份有限公司” 案件",
+            "searchKey": "上海国际港务(集团)股份有限公司",
+            "count": 57,
+            "tagText": "57个"
+        },
+        {
+            "ImageUrl": "https://co-image.qcc.com/searchDirect/news.png",
+            "KeyNo": "b716d98b1e9882077bcb97faff60a45a",
+            "Name": "<em>上海国际港务（集团）股份有限公司</em>2019年第二次临时股东大会决议公告",
+            "Type": "新闻",
+            "name": "上海国际港务（集团）股份有限公司2019年第二次临时股东大会决议公告",
+            "searchKey": "上海国际港务(集团)股份有限公司",
+            "count": 558,
+            "tagText": "新闻"
+        }
+    ]
+}
