@@ -2,7 +2,8 @@ if (process.env.NODE_ENV != 'production') {
     require('dotenv').config({ debug: true })
 }
 import { QCCAllSupplierCustomer, QCCdataType, QCCGetSearchMind, QCCGetSupplierCustomer } from "./qcc"
-import { updateCompanyInfo, updateSupplierCustomer } from "./db"
+import { deleteTask, findTask, insertTask, updateCompanyInfo, updateSupplierCustomer } from "./db"
+import { FetchTask, FetchTaskType } from "./model"
 
 async function test() {
     await test_d1()
@@ -185,4 +186,30 @@ async function test_d2() {
     ]
     console.log(await updateSupplierCustomer('ec48ff26b7f0742a1e8bf9ae30b5b150', QCCdataType.Customer, data))
 }
-test_q3()
+async function test_d3() {
+    const data1: FetchTask = {
+        type: FetchTaskType.Search,
+        layer: 0,
+        name: "上海国际港务（集团）股份有限公司",
+    }
+    console.log(await insertTask(data1))
+    const data2: FetchTask = {
+        type: FetchTaskType.SupplierCustomer,
+        layer: 0,
+        company: {
+            ImageUrl: 'https://image.qcc.com/logo/ec48ff26b7f0742a1e8bf9ae30b5b150.jpg?x-oss-process=style/logo_200',
+            KeyNo: "ec48ff26b7f0742a1e8bf9ae30b5b150",
+            CompanyName: "上海国际港务（集团）股份有限公司"
+        },
+    }
+    console.log(await insertTask(data2))
+}
+async function test_d4() {
+    const task = findTask()
+    for (const _ of Array(2).keys()) {
+        const data3 = await task.next()
+        console.log(data3)
+        if (data3) console.log(await deleteTask(data3._id))
+    }
+}
+test_d4()

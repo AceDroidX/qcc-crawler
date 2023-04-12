@@ -1,15 +1,16 @@
 if (process.env.NODE_ENV != 'production') {
     require('dotenv').config({ debug: true })
 }
-import { QCCdataType, QCCGetSupplierCustomer } from "./qcc"
+import { QCCAllSupplierCustomer, QCCdataType, QCCGetSupplierCustomer } from "./qcc"
 import { updateCompanyInfo, updateSupplierCustomer } from "./db"
 
 async function main() {
-    const resp = await QCCGetSupplierCustomer('78045ae17d1d9487163b97233b7477d2', QCCdataType.Supplier)
-    console.log(JSON.stringify(resp.data))
-    for (const item of resp.data.data) {
-
-    }
+    await fetchSupplierCustomer('ec48ff26b7f0742a1e8bf9ae30b5b150')
     // updateSupplierCustomer()
 }
-// main()
+main()
+
+async function fetchSupplierCustomer(key: string) {
+    await updateSupplierCustomer(key, QCCdataType.Customer, await QCCAllSupplierCustomer(key, QCCdataType.Customer))
+    await updateSupplierCustomer(key, QCCdataType.Supplier, await QCCAllSupplierCustomer(key, QCCdataType.Supplier))
+}

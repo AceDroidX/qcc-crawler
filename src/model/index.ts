@@ -35,6 +35,22 @@ export type CompanyInfo = {
 }
 
 export type CompanyData = CompanyInfo & {
+    updateTime: Date,
     Supplier: SupplierCustomerData[],
     Customer: SupplierCustomerData[],
+}
+
+export enum FetchTaskType {
+    Search = 1,
+    SupplierCustomer = 2,
+}
+
+export type FetchTask = {
+    type: FetchTaskType.Search,
+    layer: number,
+    name: string,
+} | {
+    type: FetchTaskType.SupplierCustomer,
+    layer: number,
+    company: CompanyInfo,
 }

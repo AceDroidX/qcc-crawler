@@ -1,5 +1,5 @@
-import { MongoClient } from 'mongodb'
-import { CompanyData, CompanyInfo, SupplierCustomerData } from './model';
+import { MongoClient, ObjectId } from 'mongodb'
+import { CompanyData, CompanyInfo, FetchTask, SupplierCustomerData } from './model';
 import { QCCdataType } from './qcc';
 
 const client = new MongoClient(
@@ -9,12 +9,23 @@ const client = new MongoClient(
 );
 client.on('serverHeartbeatFailed', event => { console.warn(`serverHeartbeatFailed: ${JSON.stringify(event)}`); });
 const db = client.db('qcc')
-const coll = db.collection<CompanyData>('companys')
+const companysColl = db.collection<CompanyData>('companys')
+const tasksColl = db.collection<FetchTask>('tasks')
 
 export function updateCompanyInfo(data: CompanyInfo) {
-    return coll.updateOne({ KeyNo: data.KeyNo }, { $set: data }, { upsert: true })
+    return companysColl.updateOne({ KeyNo: data.KeyNo }, { $set: data }, { upsert: true })
 }
 export function updateSupplierCustomer(key: string, dataType: QCCdataType, data: SupplierCustomerData[]) {
     const update = dataType == QCCdataType.Supplier ? { Supplier: data } : { Customer: data }
-    return coll.updateOne({ KeyNo: key }, { $set: update }, { upsert: true })
+    return companysColl.updateOne({ KeyNo: key }, { $set: update }, { upsert: true })
+}
+
+export function insertTask(data: FetchTask) {
+    return tasksColl.insertOne(data)
+}
+export function findTask() {
+    return tasksColl.find()
+}
+export function deleteTask(id: ObjectId) {
+    return tasksColl.deleteOne({ _id: id })
 }
