@@ -40,6 +40,26 @@ export type CompanyData = CompanyInfo & {
     Customer: SupplierCustomerData[],
 }
 
+
+const searchMindDataExample = {
+    "KeyNo": "ec48ff26b7f0742a1e8bf9ae30b5b150",
+    "QccCode": "",
+    "Name": "<em>上</em><em>海</em><em>国</em><em>际</em><em>港</em><em>务</em>（<em>集</em><em>团</em>）<em>股</em><em>份</em><em>有</em><em>限</em><em>公</em><em>司</em>",
+    "OperName": "顾金山",
+    "ImageUrl": "https://image.qcc.com/logo/ec48ff26b7f0742a1e8bf9ae30b5b150.jpg?x-oss-process=style/logo_200",
+    "IsAuth": false,
+    "AuthLevel": -1,
+    "isHide": false,
+    "OperInfo": "{\"k\":\"p2252da41b62b22496893ff7ddd1a670\",\"o\":2,\"t\":1,\"h\":false}",
+    "name": "上海国际港务（集团）股份有限公司",
+    "Reason": "网站名称匹配"
+}
+export type SearchMindData = typeof searchMindDataExample
+export type SearchMindApiData = {
+    list: SearchMindData[],
+    otherList: any,
+}
+
 export enum FetchTaskType {
     Search = 1,
     SupplierCustomer = 2,

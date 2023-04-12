@@ -27,7 +27,7 @@ var o_default: any = {
         "19": "8"
     }
 }
-var win_tid = 'cd9ab244b3b6e872fcdaa4e48db6daa4'
+var win_tid = '645d31dd8b5faefeb54b927ac6fa7a00'
 
 var qs_options: qs.IStringifyOptions = {
     // allowPrototypes: true,
@@ -83,7 +83,7 @@ export function QCCGet<T = any>(url: string) {
     const instance = axios.create({
         baseURL: 'https://www.qcc.com',
         headers: {
-            accept: 'application/json, text/plain, */*', referer: 'https://www.qcc.com',
+            accept: 'application/json, text/plain, */*', referer: 'https://www.qcc.com/',
             'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36',
             cookie: process.env['cookie'],
         }

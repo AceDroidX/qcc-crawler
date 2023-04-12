@@ -1,4 +1,4 @@
-import { SupplierCustomerApiData, SupplierCustomerData } from "./model";
+import { CompanyInfo, SearchMindApiData, SupplierCustomerApiData, SupplierCustomerData } from "./model";
 import { QCCGet } from "./qcc_sign";
 
 export enum QCCdataType {
@@ -24,5 +24,17 @@ export async function QCCAllSupplierCustomer(key: string, dataType: QCCdataType)
 }
 
 export function QCCGetSearchMind(searchKey: string) {
-    return QCCGet<any>(`/api/search/searchMind?mindKeyWords=true&mindType=9&pageSize=5&person=true&searchKey=${searchKey}&suggest=true`)
+    return QCCGet<SearchMindApiData>(`/api/search/searchMind?mindKeyWords=true&mindType=9&pageSize=5&person=true&searchKey=${encodeURI(searchKey)}&suggest=true`)
+}
+export async function QCCSearchCompany(name: string): Promise<CompanyInfo | null> {
+    const resp = await QCCGetSearchMind(name)
+    const result = resp.data.list[0]
+    if (result.name == name) {
+        return {
+            KeyNo: result.KeyNo,
+            CompanyName: result.name,
+            ImageUrl: result.ImageUrl,
+        }
+    }
+    return null
 }

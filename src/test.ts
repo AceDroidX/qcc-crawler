@@ -1,7 +1,7 @@
 if (process.env.NODE_ENV != 'production') {
     require('dotenv').config({ debug: true })
 }
-import { QCCAllSupplierCustomer, QCCdataType, QCCGetSearchMind, QCCGetSupplierCustomer } from "./qcc"
+import { QCCAllSupplierCustomer, QCCdataType, QCCGetSupplierCustomer, QCCSearchCompany } from "./qcc"
 import { deleteTask, findTask, insertTask, updateCompanyInfo, updateSupplierCustomer } from "./db"
 import { FetchTask, FetchTaskType } from "./model"
 
@@ -11,8 +11,8 @@ async function test() {
 }
 
 async function test_q1() {
-    // const resp = await QCCGetSearchMind()
-    // console.log(resp.data)
+    const resp = await QCCSearchCompany("上海国际港务（集团）股份有限公司")
+    console.log(resp)
 }
 async function test_q2() {
     const resp = await QCCGetSupplierCustomer('ec48ff26b7f0742a1e8bf9ae30b5b150', QCCdataType.Supplier)
@@ -212,4 +212,4 @@ async function test_d4() {
         if (data3) console.log(await deleteTask(data3._id))
     }
 }
-test_d4()
+test_q1()
