@@ -27,7 +27,7 @@ var o_default: any = {
         "19": "8"
     }
 }
-var win_tid = '645d31dd8b5faefeb54b927ac6fa7a00'
+var win_tid = 'dd370346e18b071cdce47cf94254dc40'
 
 var qs_options: qs.IStringifyOptions = {
     // allowPrototypes: true,

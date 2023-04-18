@@ -4,11 +4,8 @@ if (process.env.NODE_ENV != 'production') {
 import { QCCAllSupplierCustomer, QCCdataType, QCCGetSupplierCustomer, QCCSearchCompany } from "./qcc"
 import { deleteTask, findTask, insertTask, updateCompanyInfo, updateSupplierCustomer } from "./db"
 import { FetchTask, FetchTaskType } from "./model"
-
-async function test() {
-    await test_d1()
-    await test_d2()
-}
+import { runFetchTask, runTask } from "./task"
+import { readSourceJson, sourceToTask } from "./excel"
 
 async function test_q1() {
     const resp = await QCCSearchCompany("上海国际港务（集团）股份有限公司")
@@ -212,4 +209,35 @@ async function test_d4() {
         if (data3) console.log(await deleteTask(data3._id))
     }
 }
-test_q1()
+async function test_t1() {
+    const data1: FetchTask = {
+        type: FetchTaskType.Search,
+        layer: 0,
+        name: "上海国际港务（集团）股份有限公司",
+    }
+    console.log(await runFetchTask(data1))
+    const data2: FetchTask = {
+        type: FetchTaskType.SupplierCustomer,
+        layer: 0,
+        company: {
+            ImageUrl: 'https://image.qcc.com/logo/ec48ff26b7f0742a1e8bf9ae30b5b150.jpg?x-oss-process=style/logo_200',
+            KeyNo: "ec48ff26b7f0742a1e8bf9ae30b5b150",
+            CompanyName: "上海国际港务（集团）股份有限公司"
+        },
+    }
+    console.log(await runFetchTask(data2))
+}
+async function test_t2() {
+    await runTask(findTask())
+}
+function test_e1() {
+    console.log(readSourceJson())
+}
+async function test_e2() {
+    await sourceToTask()
+}
+async function test() {
+    await test_d3()
+    await test_t2()
+}
+test_e2()

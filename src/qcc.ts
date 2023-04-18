@@ -29,12 +29,14 @@ export function QCCGetSearchMind(searchKey: string) {
 export async function QCCSearchCompany(name: string): Promise<CompanyInfo | null> {
     const resp = await QCCGetSearchMind(name)
     const result = resp.data.list[0]
-    if (result.name == name) {
+    const convertedName = name.replace('(', '（').replace(')', '）')
+    if (result.name == convertedName) {
         return {
             KeyNo: result.KeyNo,
             CompanyName: result.name,
             ImageUrl: result.ImageUrl,
         }
     }
+    console.warn(`QCCSearchCompany: result.name != name\nresult.name: ${result.name}\nname: ${name}`)
     return null
 }
