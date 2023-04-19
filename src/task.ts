@@ -2,14 +2,20 @@ import { FindCursor, WithId } from "mongodb"
 import { updateSupplierCustomer, updateCompanyInfo, deleteTask } from "./db"
 import { FetchTask, FetchTaskType } from "./model"
 import { QCCdataType, QCCAllSupplierCustomer, QCCSearchCompany } from "./qcc"
+import { isAxiosError } from "axios"
 
-export async function runTask(cursor: FindCursor<WithId<FetchTask>>, interval = 5000) {
+export async function runTask(cursor: FindCursor<WithId<FetchTask>>, interval = 1000) {
+    let startTime = new Date()
+    let count = 0
     for await (const task of cursor) {
+        count += 1
         if (await runFetchTask(task)) {
             await deleteTask(task._id)
-            console.info(`runNextTask: delete task ${task._id}`)
+            const totalTime = ((new Date().getTime() - startTime.getTime()) / 1000).toFixed(1)
+            console.info(`runTask: [${count}](${totalTime}s) delete task ${task._id}`)
         } else {
-            console.info(`runNextTask: skip task ${task._id}`)
+            const totalTime = ((new Date().getTime() - startTime.getTime()) / 1000).toFixed(1)
+            console.info(`runTask: [${count}](${totalTime}s) skip task ${task._id}`)
         }
         await new Promise(r => setTimeout(r, interval));
     }
@@ -34,7 +40,13 @@ export async function runFetchTask(task: FetchTask): Promise<Boolean> {
         console.warn('runFetchTask: task.type unknown')
         return false
     } catch (err: any) {
-        console.error(err)
+        if (isAxiosError(err)) {
+            if (err.response?.status == 412) console.error(err.message)
+            else console.error(err)
+        } else {
+            console.error(err)
+        }
+        process.exit(1)
         return false
     }
 }
