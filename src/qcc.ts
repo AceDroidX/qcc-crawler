@@ -15,7 +15,7 @@ export async function QCCAllSupplierCustomer(key: string, dataType: QCCdataType)
     let maxIndex = 1
     let result: SupplierCustomerData[] = []
     while (index <= maxIndex) {
-        const resp = await QCCGetSupplierCustomer(key, dataType)
+        const resp = await QCCGetSupplierCustomer(key, dataType, index)
         maxIndex = Math.ceil(resp.data.pageInfo.total / resp.data.pageInfo.pageSize)
         result = result.concat(resp.data.data)
         index += 1
