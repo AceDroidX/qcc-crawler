@@ -73,4 +73,5 @@ export type FetchTask = {
     type: FetchTaskType.SupplierCustomer,
     layer: number,
     company: CompanyInfo,
+    force: boolean
 }

@@ -4,7 +4,7 @@ if (process.env.NODE_ENV != 'production') {
 import { QCCAllSupplierCustomer, QCCdataType, QCCGetSupplierCustomer, QCCSearchCompany } from "./qcc"
 import { deleteTask, findTask, insertTask, updateCompanyInfo, updateSupplierCustomer } from "./db"
 import { FetchTask, FetchTaskType } from "./model"
-import { runFetchTask, runTask } from "./task"
+import { forceUpdateSupplierCustomerTaskForAllCompany, runFetchTask, runTask } from "./task"
 import { readSourceJson, sourceToTask } from "./excel"
 
 async function test_q1() {
@@ -198,6 +198,7 @@ async function test_d3() {
             KeyNo: "ec48ff26b7f0742a1e8bf9ae30b5b150",
             CompanyName: "上海国际港务（集团）股份有限公司"
         },
+        force: true
     }
     console.log(await insertTask(data2))
 }
@@ -224,11 +225,15 @@ async function test_t1() {
             KeyNo: "ec48ff26b7f0742a1e8bf9ae30b5b150",
             CompanyName: "上海国际港务（集团）股份有限公司"
         },
+        force: true
     }
     console.log(await runFetchTask(data2))
 }
 async function test_t2() {
     await runTask(findTask())
+}
+async function test_t3() {
+    await forceUpdateSupplierCustomerTaskForAllCompany()
 }
 function test_e1() {
     console.log(readSourceJson())
@@ -240,4 +245,4 @@ async function test() {
     await test_d3()
     await test_t2()
 }
-test_e2()
+test_t3()

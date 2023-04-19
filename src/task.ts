@@ -1,10 +1,10 @@
 import { FindCursor, WithId } from "mongodb"
-import { updateSupplierCustomer, updateCompanyInfo, deleteTask } from "./db"
-import { FetchTask, FetchTaskType } from "./model"
+import { updateSupplierCustomer, updateCompanyInfo, deleteTask, insertTask, findCompany, findCompanyByKey } from "./db"
+import { CompanyInfo, FetchTask, FetchTaskType } from "./model"
 import { QCCdataType, QCCAllSupplierCustomer, QCCSearchCompany } from "./qcc"
 import { isAxiosError } from "axios"
 
-export async function runTask(cursor: FindCursor<WithId<FetchTask>>, interval = 1000) {
+export async function runTask(cursor: FindCursor<WithId<FetchTask>>, interval = 100) {
     let startTime = new Date()
     let count = 0
     for await (const task of cursor) {
@@ -35,7 +35,7 @@ export async function runFetchTask(task: FetchTask): Promise<Boolean> {
                 return false
             }
         } else if (task.type == FetchTaskType.SupplierCustomer) {
-            return await fetchSupplierCustomer(task.company.KeyNo)
+            return await fetchSupplierCustomer(task.company, task.layer, task.force)
         }
         console.warn('runFetchTask: task.type unknown')
         return false
@@ -51,8 +51,34 @@ export async function runFetchTask(task: FetchTask): Promise<Boolean> {
     }
 }
 
-export async function fetchSupplierCustomer(key: string) {
-    const result1 = await updateSupplierCustomer(key, QCCdataType.Customer, await QCCAllSupplierCustomer(key, QCCdataType.Customer))
-    const result2 = await updateSupplierCustomer(key, QCCdataType.Supplier, await QCCAllSupplierCustomer(key, QCCdataType.Supplier))
-    return result1.acknowledged && result2.acknowledged
+export async function fetchSupplierCustomer(company: CompanyInfo, layer: number, force: boolean): Promise<boolean> {
+    if (await findCompanyByKey(company.KeyNo) && !force) return true
+    if (!await updateCompanyInfo(company)) return false
+    const customer = await QCCAllSupplierCustomer(company.KeyNo, QCCdataType.Customer)
+    const supplier = await QCCAllSupplierCustomer(company.KeyNo, QCCdataType.Supplier)
+    const result1 = await updateSupplierCustomer(company.KeyNo, QCCdataType.Customer, customer)
+    const result2 = await updateSupplierCustomer(company.KeyNo, QCCdataType.Supplier, supplier)
+    const tasklist = customer.map(item => {
+        const companyinfo: CompanyInfo = {
+            KeyNo: item.KeyNo,
+            CompanyName: item.CompanyName,
+            ImageUrl: item.ImageUrl,
+        }
+        return insertTask({ type: FetchTaskType.SupplierCustomer, layer: layer + 1, company: companyinfo, force: false })//子任务不强制更新
+    })
+    const insertResult = (await Promise.all(tasklist)).every(item => item.acknowledged)
+    return result1.acknowledged && result2.acknowledged && insertResult
+}
+
+export async function forceUpdateSupplierCustomerTaskForAllCompany() {
+    for await (const company of findCompany()) {
+        const companyinfo: CompanyInfo = {
+            KeyNo: company.KeyNo,
+            CompanyName: company.CompanyName,
+            ImageUrl: company.ImageUrl,
+        }
+        const insertResult = await insertTask({ type: FetchTaskType.SupplierCustomer, layer: 0, company: companyinfo, force: true })
+        if (!insertResult.acknowledged) console.error(insertResult)
+    }
+    console.info('forceUpdateSupplierCustomerTaskForAllCompany finished successfully')
 }

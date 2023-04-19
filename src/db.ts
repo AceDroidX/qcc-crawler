@@ -19,6 +19,12 @@ export function updateSupplierCustomer(key: string, dataType: QCCdataType, data:
     const update = dataType == QCCdataType.Supplier ? { Supplier: data } : { Customer: data }
     return companysColl.updateOne({ KeyNo: key }, { $set: update }, { upsert: true })
 }
+export function findCompany() {
+    return companysColl.find()
+}
+export function findCompanyByKey(key: string) {
+    return companysColl.findOne({ KeyNo: key })
+}
 
 export function insertTask(data: FetchTask) {
     return tasksColl.insertOne(data)
