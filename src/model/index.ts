@@ -69,6 +69,7 @@ export type FetchTask = {
     type: FetchTaskType.Search,
     layer: number,
     name: string,
+    fetchDetail: boolean,
 } | {
     type: FetchTaskType.SupplierCustomer,
     layer: number,

@@ -30,7 +30,9 @@ export async function runFetchTask(task: FetchTask): Promise<Boolean> {
         if (task.type == FetchTaskType.Search) {
             const resp = await QCCSearchCompany(task.name)
             if (resp) {
-                return (await updateCompanyInfo(resp)).acknowledged
+                const resp1 = (await updateCompanyInfo(resp)).acknowledged
+                const resp2 = task.fetchDetail ? (await insertTask({ type: FetchTaskType.SupplierCustomer, layer: task.layer, company: resp, force: false })).acknowledged : true
+                return resp1 && resp2
             } else {
                 return false
             }

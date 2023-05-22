@@ -188,6 +188,7 @@ async function test_d3() {
         type: FetchTaskType.Search,
         layer: 0,
         name: "上海国际港务（集团）股份有限公司",
+        fetchDetail: false,
     }
     console.log(await insertTask(data1))
     const data2: FetchTask = {
@@ -215,6 +216,7 @@ async function test_t1() {
         type: FetchTaskType.Search,
         layer: 0,
         name: "上海国际港务（集团）股份有限公司",
+        fetchDetail: false,
     }
     console.log(await runFetchTask(data1))
     const data2: FetchTask = {
@@ -235,6 +237,18 @@ async function test_t2() {
 async function test_t3() {
     await forceUpdateSupplierCustomerTaskForAllCompany()
 }
+/**
+ * 测试FetchTaskType.Search, fetchDetail: true
+ */
+async function test_t4() {
+    const data1: FetchTask = {
+        type: FetchTaskType.Search,
+        layer: 0,
+        name: "上海国际港务（集团）股份有限公司",
+        fetchDetail: true,
+    }
+    console.log(await runFetchTask(data1))
+}
 function test_e1() {
     console.log(readSourceJson())
 }
@@ -245,4 +259,4 @@ async function test() {
     await test_d3()
     await test_t2()
 }
-test_q1()
+test_t4()
