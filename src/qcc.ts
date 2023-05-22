@@ -7,6 +7,7 @@ export enum QCCdataType {
 }
 
 export function QCCGetSupplierCustomer(key: string, dataType: QCCdataType, pageIndex = 1) {
+    console.debug(`QCCGetSupplierCustomer: ${key} ${dataType} ${pageIndex}`)
     return QCCGet<SupplierCustomerApiData>(`/api/datalist/supplierCustomer?companyKeyNo=${key}&dataType=${dataType}&keyNo=${key}&pageIndex=${pageIndex}`)
 }
 
