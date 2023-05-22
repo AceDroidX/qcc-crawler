@@ -276,11 +276,15 @@ async function test_t5() {
 function test_e1() {
     console.log(readSourceJson())
 }
+/**
+ * 从Excel添加搜索任务
+ */
 async function test_e2() {
     await sourceToTask()
+    console.log('done')
 }
 async function test() {
     await test_d3()
     await test_t2()
 }
-test_t5()
+test_e2()
