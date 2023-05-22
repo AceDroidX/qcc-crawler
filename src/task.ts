@@ -73,7 +73,6 @@ async function searchCompany(task: FetchTask): Promise<Boolean> {
 
 export async function fetchSupplierCustomer(company: CompanyInfo, layer: number, force: boolean): Promise<boolean> {
     if (await findCompanyByKey(company.KeyNo) && !force) return true
-    if (!await updateCompanyInfo(company)) return false
     const customer = await QCCAllSupplierCustomer(company.KeyNo, QCCdataType.Customer)
     const supplier = await QCCAllSupplierCustomer(company.KeyNo, QCCdataType.Supplier)
     const result1 = await updateSupplierCustomer(company.KeyNo, QCCdataType.Customer, customer)
@@ -86,8 +85,9 @@ export async function fetchSupplierCustomer(company: CompanyInfo, layer: number,
         }
         return insertTask({ type: FetchTaskType.SupplierCustomer, layer: layer + 1, company: companyinfo, force: false })//子任务不强制更新
     })
+    const updateCompanyInfoResult = (await updateCompanyInfo(company)).acknowledged
     const insertResult = (await Promise.all(tasklist)).every(item => item.acknowledged)
-    return result1.acknowledged && result2.acknowledged && insertResult
+    return result1.acknowledged && result2.acknowledged && updateCompanyInfoResult && insertResult
 }
 
 export async function forceUpdateSupplierCustomerTaskForAllCompany() {
