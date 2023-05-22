@@ -1,5 +1,5 @@
 import { FindCursor, WithId } from "mongodb"
-import { updateSupplierCustomer, updateCompanyInfo, deleteTask, insertTask, findCompany, findCompanyByKey } from "./db"
+import { updateSupplierCustomer, updateCompanyInfo, deleteTask, insertTask, findCompany, findCompanyByKey, findCompanyByName } from "./db"
 import { CompanyInfo, FetchTask, FetchTaskType } from "./model"
 import { QCCdataType, QCCAllSupplierCustomer, QCCSearchCompany } from "./qcc"
 import { isAxiosError } from "axios"
@@ -28,14 +28,7 @@ export async function runFetchTask(task: FetchTask): Promise<Boolean> {
     }
     try {
         if (task.type == FetchTaskType.Search) {
-            const resp = await QCCSearchCompany(task.name)
-            if (resp) {
-                const resp1 = (await updateCompanyInfo(resp)).acknowledged
-                const resp2 = task.fetchDetail ? (await insertTask({ type: FetchTaskType.SupplierCustomer, layer: task.layer, company: resp, force: false })).acknowledged : true
-                return resp1 && resp2
-            } else {
-                return false
-            }
+            return await searchCompany(task)
         } else if (task.type == FetchTaskType.SupplierCustomer) {
             return await fetchSupplierCustomer(task.company, task.layer, task.force)
         }
@@ -49,6 +42,31 @@ export async function runFetchTask(task: FetchTask): Promise<Boolean> {
             console.error(err)
         }
         process.exit(1)
+        return false
+    }
+}
+
+async function searchCompany(task: FetchTask): Promise<Boolean> {
+    if (task.type != FetchTaskType.Search) { console.error('task.type != FetchTaskType.Search'); process.exit(1) }
+    let resp: CompanyInfo | null = null;
+    if (!task.force) {
+        const convertedName = task.name.replace('(', '（').replace(')', '）')
+        const companyData = await findCompanyByName(task.name) ?? await findCompanyByName(convertedName)
+        if (companyData) {
+            const companyinfo: CompanyInfo = {
+                KeyNo: companyData.KeyNo,
+                CompanyName: companyData.CompanyName,
+                ImageUrl: companyData.ImageUrl,
+            }
+            resp = companyinfo
+        }
+    }
+    if (!resp) resp = await QCCSearchCompany(task.name)
+    if (resp) {
+        const resp1 = (await updateCompanyInfo(resp)).acknowledged
+        const resp2 = task.fetchDetail ? (await insertTask({ type: FetchTaskType.SupplierCustomer, layer: task.layer, company: resp, force: true })).acknowledged : true
+        return resp1 && resp2
+    } else {
         return false
     }
 }

@@ -25,6 +25,9 @@ export function findCompany() {
 export function findCompanyByKey(key: string) {
     return companysColl.findOne({ KeyNo: key })
 }
+export function findCompanyByName(name: string) {
+    return companysColl.findOne({ CompanyName: name })
+}
 
 export function insertTask(data: FetchTask) {
     return tasksColl.insertOne(data)
