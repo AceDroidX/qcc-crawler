@@ -4,7 +4,7 @@ if (process.env.NODE_ENV != 'production') {
 import { QCCAllSupplierCustomer, QCCdataType, QCCGetSupplierCustomer, QCCSearchCompany } from "./qcc"
 import { deleteTask, findTask, insertTask, updateCompanyInfo, updateSupplierCustomer } from "./db"
 import { FetchTask, FetchTaskType } from "./model"
-import { forceUpdateSupplierCustomerTaskForAllCompany, runFetchTask, runTask } from "./task"
+import { checkTaskIsUnnecessary, forceUpdateSupplierCustomerTaskForAllCompany, runFetchTask, runTask } from "./task"
 import { readSourceJson, sourceToTask } from "./excel"
 
 async function test_q1() {
@@ -19,8 +19,10 @@ async function test_q3() {
     const data = await QCCAllSupplierCustomer('ec48ff26b7f0742a1e8bf9ae30b5b150', QCCdataType.Supplier)
     console.log(data)
 }
+/**
+ * 测试添加/更新企业信息
+ */
 async function test_d1() {
-
     const data1 = {
         ImageUrl: 'https://image.qcc.com/logo/ec48ff26b7f0742a1e8bf9ae30b5b150.jpg?x-oss-process=style/logo_200',
         KeyNo: "ec48ff26b7f0742a1e8bf9ae30b5b150",
@@ -28,6 +30,9 @@ async function test_d1() {
     }
     console.log(await updateCompanyInfo(data1))
 }
+/**
+ * 测试添加企业供应商客户
+ */
 async function test_d2() {
     const data = [
         {
@@ -183,6 +188,9 @@ async function test_d2() {
     ]
     console.log(await updateSupplierCustomer('ec48ff26b7f0742a1e8bf9ae30b5b150', QCCdataType.Customer, data))
 }
+/**
+ * 测试添加两种任务
+ */
 async function test_d3() {
     const data1: FetchTask = {
         type: FetchTaskType.Search,
@@ -203,6 +211,17 @@ async function test_d3() {
         force: true
     }
     console.log(await insertTask(data2))
+    const data3: FetchTask = {
+        type: FetchTaskType.SupplierCustomer,
+        layer: 0,
+        company: {
+            ImageUrl: 'https://image.qcc.com/logo/ec48ff26b7f0742a1e8bf9ae30b5b150.jpg?x-oss-process=style/logo_200',
+            KeyNo: "ec48ff26b7f0742a1e8bf9ae30b5b150",
+            CompanyName: "上海国际港务（集团）股份有限公司"
+        },
+        force: false
+    }
+    console.log(await insertTask(data3))
 }
 async function test_d4() {
     const task = findTask()
@@ -273,10 +292,56 @@ async function test_t5() {
     }
     console.log(await runFetchTask(data2))
 }
+/**
+ * 测试checkTaskIsUnnecessary
+ */
+async function test_t6() {
+    await test_d1()
+    await test_d2()
+    const data1: FetchTask = {
+        type: FetchTaskType.Search,
+        layer: 0,
+        name: "上海国际港务（集团）股份有限公司",
+        force: true,
+        fetchDetail: false,
+    }
+    const data2: FetchTask = {
+        type: FetchTaskType.SupplierCustomer,
+        layer: 0,
+        company: {
+            ImageUrl: 'https://image.qcc.com/logo/ec48ff26b7f0742a1e8bf9ae30b5b150.jpg?x-oss-process=style/logo_200',
+            KeyNo: "ec48ff26b7f0742a1e8bf9ae30b5b150",
+            CompanyName: "上海国际港务（集团）股份有限公司"
+        },
+        force: true
+    }
+    const data3: FetchTask = {
+        type: FetchTaskType.SupplierCustomer,
+        layer: 0,
+        company: {
+            ImageUrl: 'https://image.qcc.com/logo/ec48ff26b7f0742a1e8bf9ae30b5b150.jpg?x-oss-process=style/logo_200',
+            KeyNo: "ec48ff26b7f0742a1e8bf9ae30b5b150",
+            CompanyName: "上海国际港务（集团）股份有限公司"
+        },
+        force: false
+    }
+    console.log(await checkTaskIsUnnecessary(data1))
+    console.log(await checkTaskIsUnnecessary(data2))
+    console.log(await checkTaskIsUnnecessary(data3))
+}
+/**
+ * 添加公司信息、供应商客户、任务
+ */
+async function test_t7() {
+    await test_d1()
+    await test_d2()
+    await test_d3()
+}
 function test_e1() {
     console.log(readSourceJson())
 }
 /**
+ * Entrypoint
  * 从Excel添加搜索任务
  */
 async function test_e2() {
@@ -287,4 +352,4 @@ async function test() {
     await test_d3()
     await test_t2()
 }
-test_e2()
+test_t7()

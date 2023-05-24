@@ -21,6 +21,42 @@ export async function runTask(cursor: FindCursor<WithId<FetchTask>>, interval = 
     }
 }
 
+export async function cleanTask(cursor: FindCursor<WithId<FetchTask>>) {
+    let startTime = new Date()
+    let count = 0
+    for await (const task of cursor) {
+        if (await checkTaskIsUnnecessary(task)) {
+            count += 1
+            await deleteTask(task._id)
+            const totalTime = ((new Date().getTime() - startTime.getTime()) / 1000).toFixed(1)
+            console.info(`cleanTask: [${count}](${totalTime}s) delete task ${task._id}`)
+        }
+    }
+}
+
+/**
+ * 判断是否为不需要运行的任务
+ * @param task
+ * @returns true为非必要(需要删除)false为必要(不需要删除)
+ */
+export async function checkTaskIsUnnecessary(task: FetchTask): Promise<Boolean> {
+    if (task.layer > 10) {
+        console.info('checkTaskIsUnnecessary: task.layer > 10')
+        return false
+    }
+    try {
+        if (task.type == FetchTaskType.SupplierCustomer) {
+            return !task.force && (await findCompanyByKey(task.company.KeyNo) != null)
+        }
+        // console.info('checkTaskIsUnnecessary: task.type unknown')
+        return false
+    } catch (err: any) {
+        console.error(err)
+        process.exit(1)
+        return false
+    }
+}
+
 export async function runFetchTask(task: FetchTask): Promise<Boolean> {
     if (task.layer > 10) {
         console.warn('runFetchTask: task.layer > 10')
