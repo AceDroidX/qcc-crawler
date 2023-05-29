@@ -10,6 +10,7 @@ const client = new MongoClient(
 client.on('serverHeartbeatFailed', event => { console.warn(`serverHeartbeatFailed: ${JSON.stringify(event)}`); });
 const db = client.db('qcc')
 const companysColl = db.collection<CompanyData>('companys')
+companysColl.createIndex({ KeyNo: 1 }, { unique: true })
 const tasksColl = db.collection<FetchTask>('tasks')
 
 export function updateCompanyInfo(data: CompanyInfo) {

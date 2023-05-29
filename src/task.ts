@@ -33,7 +33,7 @@ export async function cleanTask(cursor: FindCursor<WithId<FetchTask>>, totalCoun
             const totalTime = ((new Date().getTime() - startTime.getTime()) / 1000).toFixed(1)
             console.info(`cleanTask: <${index}/${totalCount} ${(index / totalCount * 100).toFixed(1)}%>[${cleanedCount}](${totalTime}s) delete task ${task._id}`)
         } else {
-            if (index % 100 == 0) {
+            if (index % 1000 == 0) {
                 const totalTime = ((new Date().getTime() - startTime.getTime()) / 1000).toFixed(1)
                 console.info(`cleanTask: <${index}/${totalCount} ${(index / totalCount * 100).toFixed(1)}%>(${totalTime}s)`)
             }
