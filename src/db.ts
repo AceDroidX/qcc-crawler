@@ -38,3 +38,6 @@ export function findTask() {
 export function deleteTask(id: ObjectId) {
     return tasksColl.deleteOne({ _id: id })
 }
+export function taskCount() {
+    return tasksColl.estimatedDocumentCount()
+}

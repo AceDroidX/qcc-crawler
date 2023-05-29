@@ -21,15 +21,22 @@ export async function runTask(cursor: FindCursor<WithId<FetchTask>>, interval = 
     }
 }
 
-export async function cleanTask(cursor: FindCursor<WithId<FetchTask>>) {
+export async function cleanTask(cursor: FindCursor<WithId<FetchTask>>, totalCount: number) {
     let startTime = new Date()
-    let count = 0
+    let index = 0
+    let cleanedCount = 0
     for await (const task of cursor) {
+        index += 1
         if (await checkTaskIsUnnecessary(task)) {
-            count += 1
+            cleanedCount += 1
             await deleteTask(task._id)
             const totalTime = ((new Date().getTime() - startTime.getTime()) / 1000).toFixed(1)
-            console.info(`cleanTask: [${count}](${totalTime}s) delete task ${task._id}`)
+            console.info(`cleanTask: <${index}/${totalCount} ${(index / totalCount * 100).toFixed(1)}%>[${cleanedCount}](${totalTime}s) delete task ${task._id}`)
+        } else {
+            if (index % 100 == 0) {
+                const totalTime = ((new Date().getTime() - startTime.getTime()) / 1000).toFixed(1)
+                console.info(`cleanTask: <${index}/${totalCount} ${(index / totalCount * 100).toFixed(1)}%>(${totalTime}s)`)
+            }
         }
     }
 }
